@@ -6,7 +6,7 @@ API REST usando Spring Boot e Postgres;
 • API feita com SpringBoot, com as entidades Pessoa e Endereço
  - ../api/pessoas
  - ../api/enderecos
-## DOCUMENTÇÂO (Com a aplicação rodando)
+## DOCUMENTÇÃO (Com a aplicação rodando)
 • O link para a documentação do Swagger com a explicação da API
 
 *http://localhost:8080/swagger-ui.html*
