@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,10 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.stefanini.selecao2019.models.Pessoa;
 import com.stefanini.selecao2019.repository.PessoaRepository;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 
 
 @RestController
 @RequestMapping("/api")
+@Api(value="API REST")
+@CrossOrigin(origins="*")
 public class PessoaResource {
 
     private final Logger log = LoggerFactory.getLogger(PessoaResource.class);
@@ -42,6 +48,7 @@ public class PessoaResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/pessoas")
+    @ApiOperation(value="Cria um objeto do tipo Pessoa")
     public ResponseEntity<Pessoa> createPessoa(@RequestBody Pessoa pessoa) throws URISyntaxException {
         log.debug("REST request to save Pessoa : {}", pessoa);
         if (pessoa.getId() != null) {
@@ -62,6 +69,7 @@ public class PessoaResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/pessoas")
+    @ApiOperation(value="Edita um objeto do tipo Pessoa")
     public ResponseEntity<Pessoa> updatePessoa(@RequestBody Pessoa pessoa) throws URISyntaxException {
         log.debug("REST request to update Pessoa : {}", pessoa);
         if (pessoa.getId() == null) {
@@ -78,6 +86,7 @@ public class PessoaResource {
      * @return the ResponseEntity with status 200 (OK) and the list of pessoas in body
      */
     @GetMapping("/pessoas")
+    @ApiOperation(value="Busca uma lista do tipo Pessoa")
     public List<Pessoa> getAllPessoas() {
         log.debug("REST request to get all Pessoas");
         return pessoaRepository.findAll();
@@ -90,6 +99,7 @@ public class PessoaResource {
      * @return the ResponseEntity with status 200 (OK) and with body the pessoa, or with status 404 (Not Found)
      */
     @GetMapping("/pessoas/{id}")
+    @ApiOperation(value="Busca um objeto do tipo Pessoa")
     public ResponseEntity<Optional<Pessoa>> getPessoa(@PathVariable Long id) {
         log.debug("REST request to get Pessoa : {}", id);
        Optional<Pessoa> pessoa = pessoaRepository.findById(id);
@@ -103,6 +113,7 @@ public class PessoaResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/pessoas/{id}")
+    @ApiOperation(value="Deleta um objeto do tipo Pessoa")
     public ResponseEntity<Void> deletePessoa(@PathVariable Long id) {
         log.debug("REST request to delete Pessoa : {}", id);
         pessoaRepository.deleteById(id);

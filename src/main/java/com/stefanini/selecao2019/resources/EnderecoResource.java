@@ -10,6 +10,7 @@ import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,10 +24,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.stefanini.selecao2019.models.Endereco;
 import com.stefanini.selecao2019.repository.EnderecoRepository;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 
 
 @RestController
 @RequestMapping("/api")
+@Api(value="API REST")
+@CrossOrigin(origins="*")
 public class EnderecoResource {
 
     private final Logger log = LoggerFactory.getLogger(EnderecoResource.class);
@@ -45,6 +51,7 @@ public class EnderecoResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/enderecos")
+    @ApiOperation(value="Cria um objeto do tipo Endereço")
     public ResponseEntity<Endereco> createEndereco(@RequestBody Endereco endereco) throws URISyntaxException {
         log.debug("REST request to save Endereco : {}", endereco);
         if (endereco.getId() != null) {
@@ -65,6 +72,7 @@ public class EnderecoResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/enderecos")
+    @ApiOperation(value="Edita um objeto do tipo Endereço")
     public ResponseEntity<Endereco> updateEndereco(@RequestBody Endereco endereco) throws URISyntaxException {
         log.debug("REST request to update Endereco : {}", endereco);
         if (endereco.getId() == null) {
@@ -82,6 +90,7 @@ public class EnderecoResource {
      * @return the ResponseEntity with status 200 (OK) and the list of enderecos in body
      */
     @GetMapping("/enderecos")
+    @ApiOperation(value="Busca uma lista do tipo Endereço")
     public List<Endereco> getAllEnderecos(@RequestParam(required = false) String filter) {
         if ("pessoa-is-null".equals(filter)) {
             log.debug("REST request to get all Enderecos where pessoa is null");
@@ -101,6 +110,7 @@ public class EnderecoResource {
      * @return the ResponseEntity with status 200 (OK) and with body the endereco, or with status 404 (Not Found)
      */
     @GetMapping("/enderecos/{id}")
+    @ApiOperation(value="Busca um objeto do tipo Endereço")
     public ResponseEntity<Optional<Endereco>> getEndereco(@PathVariable Long id) {
         log.debug("REST request to get Endereco : {}", id);
         Optional<Endereco> endereco = enderecoRepository.findById(id);
@@ -114,6 +124,7 @@ public class EnderecoResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/enderecos/{id}")
+    @ApiOperation(value="Deleta um objeto do tipo Endereço")
     public ResponseEntity<Void> deleteEndereco(@PathVariable Long id) {
         log.debug("REST request to delete Endereco : {}", id);
         enderecoRepository.deleteById(id);
