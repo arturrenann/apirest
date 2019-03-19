@@ -2,7 +2,7 @@
 API REST usando Spring Boot e Postgres;
 
 **FEITO EM JAVA**
-## Intruções
+## Instruções
 • API feita com SpringBoot, com as entidades Pessoa e Endereço
  - ../api/pessoas
  - ../api/enderecos
